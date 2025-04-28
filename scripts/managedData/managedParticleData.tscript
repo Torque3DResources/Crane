@@ -1,0 +1,48 @@
+
+datablock ParticleData(contrailPart : DefaultParticle)
+{
+   constantAcceleration = "1.17549e-38";
+   TextureAsset = "Crane:contrail_image";
+   lifetimeMS = "3000";
+   lifetimeVarianceMS = "0";
+   dragCoefficient = "0";
+   inheritedVelFactor = "0";
+   spinRandomMin = "0";
+   spinRandomMax = "1";
+   spinSpeed = "0";
+   colors[0] = "1 1 1 1";
+   colors[1] = "1 1 1 1";
+   colors[2] = "1 1 1 1";
+   colors[3] = "1 1 1 1";
+   sizes[1] = "0.0999466";
+   sizes[2] = "0.0999466";
+   sizes[3] = "0.0999466";
+   sizes[0] = "0.0999466";
+   times[1] = "0.25098";
+   times[2] = "0.74902";
+   useInvAlpha = "0";
+};
+
+datablock ParticleData(contrailRedPart : DefaultParticle)
+{
+   constantAcceleration = "1.17549e-38";
+   TextureAsset = "Crane:contrail_image";
+   lifetimeMS = "300";
+   lifetimeVarianceMS = "0";
+   dragCoefficient = "0";
+   inheritedVelFactor = "0";
+   spinRandomMin = "0";
+   spinRandomMax = "1";
+   spinSpeed = "0";
+   colors[0] = "1 0 0 1";
+   colors[1] = "1 0 0 1";
+   colors[2] = "1 0 0 1";
+   colors[3] = "0.955105 0 0 1";
+   sizes[1] = "0.2";
+   sizes[2] = "0.2";
+   sizes[3] = "0.2";
+   sizes[0] = "0.2";
+   times[1] = "0.25098";
+   times[2] = "0.74902";
+   useInvAlpha = "0";
+};

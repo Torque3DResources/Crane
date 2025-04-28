@@ -1,0 +1,214 @@
+datablock ProjectileData(CraneProjectile)
+{
+   projectileShapeAsset = "";
+   directDamage = 10;
+   radiusDamage = 15;
+   damageRadius = 3;
+   areaImpulse = 1200;
+
+   explosion = GrenadeLauncherExplosion;
+   waterExplosion = GrenadeLauncherWaterExplosion;
+
+   decal = ScorchRXDecal;
+   splash = RocketSplash;
+
+   muzzleVelocity = 250;
+   velInheritFactor = 0.7;
+
+   armingDelay = 0;
+   lifetime = "4992";
+   fadeDelay = "4480";
+
+   bounceElasticity = 0;
+   bounceFriction = 0;
+   isBallistic = false;
+   gravityMod = 0.80;
+
+   damageType = "RocketDamage";
+};
+
+datablock ShapeBaseImageData(crane_gun0)
+{
+   // Basic Item properties
+   shapeAsset[0] = "Crane:crane_gun_shape";
+   emap = true;
+
+   // Specify mount point & offset for 3rd person, and eye offset
+   // for first person rendering.
+   mountPoint = 1;
+   firstPerson = false;
+   accuFire = true;
+   
+   correctMuzzleVector = true;
+
+   // Add the WeaponImage namespace as a parent, WeaponImage namespace
+   // provides some hooks into the inventory system.
+   className = "WeaponImage";
+   class = "WeaponImage";
+
+   // Projectile and Ammo
+   //ammo = BulletAmmo;
+
+   projectile = CraneProjectile;
+   projectileType = Projectile;
+   projectileSpread = "0.1";
+
+   // Weapon lights up while firing
+   lightColor = "0.992126 0.968504 0.708661 1";
+   lightRadius = "4";
+   lightDuration = "100";
+   lightType = "WeaponFireLight";
+   lightBrightness = 2;
+
+   // Shake camera while firing.
+   shakeCamera = false;
+
+   // Images have a state system which controls how the animations
+   // are run, which sounds are played, script callbacks, etc. This
+   // state system is downloaded to the client so that clients can
+   // predict state changes and animate accordingly.  The following
+   // system supports basic ready->fire->reload transitions as
+   // well as a no-ammo->dryfire idle state.
+
+   useRemainderDT = true;
+
+   // Initial start up state
+   stateName[0]                     = "Preactivate";
+   stateTransitionOnLoaded[0]       = "Activate";
+   stateTransitionOnNoAmmo[0]       = "NoAmmo";
+
+   // Activating the gun.  Called when the weapon is first
+   // mounted and there is ammo.
+   stateName[1]                     = "Activate";
+   stateTransitionOnTimeout[1]      = "Ready";
+   stateTimeoutValue[1]             = 0.5;
+   stateSequence[1]                 = "Activate";
+
+   // Ready to fire, just waiting for the trigger
+   stateName[2]                     = "Ready";
+   stateTransitionOnNoAmmo[2]       = "NoAmmo";
+   stateTransitionOnTriggerDown[2]  = "Fire";
+
+   // Fire the weapon. Calls the fire script which does
+   // the actual work.
+   stateName[3]                     = "Fire";
+   stateTransitionOnTimeout[3]      = "Reload";
+   stateTimeoutValue[3]             = 0.16;
+   stateFire[3]                     = true;
+   stateRecoil[3]                   = "";
+   stateAllowImageChange[3]         = false;
+   stateSequence[3]                 = "Fire";
+   stateSequenceRandomFlash[3]      = true;        // use muzzle flash sequence
+   stateScript[3]                   = "onFire";
+   stateSoundAsset[3]               = "Cheetah:CheetahTurretFireSound";
+   stateEmitter[3]                  = TurretFireSmokeEmitter;
+   stateEmitterTime[3]              = 0.025;
+
+   // Play the reload animation, and transition into
+   stateName[4]                     = "Reload";
+   stateTransitionOnNoAmmo[4]       = "NoAmmo";
+   stateWaitForTimeout[4]           = "0";
+   stateTransitionOnTimeout[4]      = "Ready";
+   stateTimeoutValue[4]             = 0.16;
+   stateAllowImageChange[4]         = false;
+   stateSequence[4]                 = "Reload";
+   //stateEjectShell[4]               = true;
+
+   // No ammo in the weapon, just idle until something
+   // shows up. Play the dry fire sound if the trigger is
+   // pulled.
+   stateName[5]                     = "NoAmmo";
+   stateTransitionOnAmmo[5]         = "Reload";
+   stateSequence[5]                 = "NoAmmo";
+   stateTransitionOnTriggerDown[5]  = "DryFire";
+
+   // No ammo dry fire
+   stateName[6]                     = "DryFire";
+   stateTimeoutValue[6]             = 0.33;
+   stateTransitionOnTimeout[6]      = "NoAmmo";
+   stateScript[6]                   = "onDryFire";
+   
+	usesEnergy = true;
+	minEnergy = 0.0;
+    inheritEnergyFromMount = true;
+    infiniteAmmo = true;
+};
+
+datablock ShapeBaseImageData(crane_gun1 : crane_gun0)
+{
+   mountPoint = 2;
+};
+
+datablock ShapeBaseImageData(crane_gun2 : crane_gun0)
+{
+   mountPoint = 3;
+};
+
+datablock ShapeBaseImageData(crane_gun3 : crane_gun0)
+{
+   mountPoint = 4;
+};
+
+datablock FlyingVehicleData(craneData)
+{
+   ShapeAsset = "crane:crane_body_shape";
+   cameraMaxDist = "20";
+   cameraMinDist = "10";
+   useEyePoint = "1";   
+   
+   // Physics
+   drag    = 0.2;
+   density = 1.0;
+   minDrag = 90;               // Linear Drag (eventually slows you down when not thrusting...constant drag)
+   rotationalDrag = 10;         // Anguler Drag (dampens the drift after you stop moving the mouse...also tumble drag)
+   maxAutoSpeed = 1;            // Autostabilizer kicks in when less than this speed. (meters / second)
+   autoAngularForce = "300";        // Angular stabilizer force (this force levels you out when autostabilizer kicks in)
+   autoLinearForce = "300";         // Linear stabilzer force (this slows you down when autostabilizer kicks in)
+   autoInputDamping = 0.95;      // Dampen control input so you don't` whack out at very slow speeds
+   maxSteeringAngle = 5;         // Max radiens you can rotate the wheel. Smaller number is more maneuverable.
+   maxRollingAngle = 10;	   // Max radiens you can rotate the wheel. Smaller number is more maneuverable. (for roll)
+   horizontalSurfaceForce = 10;  // Horizontal center "wing" (provides "bite" into the wind for climbing/diving and turning)
+   verticalSurfaceForce = "10";   // Vertical center "wing" (controls side slip. lower numbers make MORE slide.)
+   maneuveringForce = 3900;      // Horizontal jets (W,S,D,A key thrust)
+   steeringForce = 700;          // Steering jets (force applied when you move the mouse)
+   steeringRollForce = "15";        // Steering jets (how much you heel over when you turn) 8
+   rollForce = "15";               // Auto-roll (self-correction to right you after you roll/invert)
+   hoverHeight = "0.01";              // Height off the ground at rest
+   createHoverHeight = "0";        // Height off the ground when created
+   jetForce = "370";              // Afterburner thrust (this is in addition to normal thrust)
+   minJetEnergy = "0";            // Afterburner can't be used if below this threshhold.
+   jetEnergyDrain = "0";         // Energy use of the afterburners (lower number is less drain)   	
+   vertThrustMultiple = "10";
+   integration = "4";              // Physics integration: TickSec/Rate
+	collisionTol = "0.2";           // Collision distance tolerance
+	contactTol = 0.1;             // Contact velocity tolerance
+   mass = 100;                   // Mass of the vehicle
+   bodyFriction = "0.5";             // Don't change this.
+   bodyRestitution = 0.5;        // When you hit the ground, how much you rebound. (between 0 and 1)
+   minRollSpeed = 0;             // Don't change this.	
+   dragForce = "0.01";
+   originalAssetName = "crane";
+   assetType = "Datablock";
+   minTrailSpeed = "10";
+   dustEmitter = "LiftoffDustEmitter";
+   Explosion = "GrenadeExplosion";
+   underwaterExplosion = "GrenadeLauncherWaterExplosion";
+   Debris = "grenadeDebris";
+   DebrisShapeAsset = "crane:crane_body_shape";
+   FlyingSoundsAsset[0] = "testMaps:cheetahSqueal";
+   FlyingSoundsAsset[1] = "testMaps:cheetahEngine";
+   forwardJetEmitter = "contrailRedEm";
+   backwardJetEmitter = "contrailRedEm";
+   downJetEmitter = "contrailRedEm";
+   trailEmitter = "contrailEm";
+   FlyingSoundsAsset1 = "testMaps:cheetahEngine";
+   FlyingSoundsAsset0 = "testMaps:cheetahSqueal";
+   maxEnergy = 1000;
+   maxDamage = 1000;
+   disabledLevel = 700;
+   minImpactSpeed = 1;
+   collisionMul = 1;
+   impactMul = 10;
+   controlMap = "flightKeyMap";
+   AIControllerData = "aiPlaneControl";
+};

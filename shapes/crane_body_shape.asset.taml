@@ -1,0 +1,5 @@
+<ShapeAsset
+    AssetName="crane_body_shape"
+    fileName="@assetFile=crane_body.dae"
+    constuctorFileName="@assetFile=crane_body.tscript"
+    materialSlot0="@asset=Crane:Crane_Main_mat"/>

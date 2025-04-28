@@ -1,0 +1,15 @@
+<MaterialAsset
+    AssetName="Crane_Main_mat"
+    materialDefinitionName="Crane_Main_mat">
+    <Material
+        Name="Crane_Main_mat"
+        mapTo="Crane_Main"
+        originalAssetName="Crane_Main_mat">
+        <Material.Stages>
+            <Stages_beginarray
+                DiffuseMapAsset="Crane:Crane_D_image"
+                NormalMapAsset="Crane:Crane_N_image"
+                ORMConfigMapAsset="Crane:Crane_ORM_image"/>
+        </Material.Stages>
+    </Material>
+</MaterialAsset>

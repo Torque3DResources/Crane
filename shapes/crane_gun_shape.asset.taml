@@ -1,0 +1,6 @@
+<ShapeAsset
+    AssetName="crane_gun_shape"
+    fileName="@assetFile=crane_gun.dae"
+    constuctorFileName="@assetFile=crane_gun.tscript"
+    materialSlot0="@asset=Crane:Crane_MuzzleFlash_mat"
+    materialSlot1="@asset=Crane:Crane_Main"/>

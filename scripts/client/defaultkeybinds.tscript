@@ -1,0 +1,152 @@
+//-----------------------------------------------------------------------------
+// Copyright (c) 2012 GarageGames, LLC
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to
+// deal in the Software without restriction, including without limitation the
+// rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+// sell copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+// IN THE SOFTWARE.
+//-----------------------------------------------------------------------------
+
+if ( !isObject( playerKeyMap ) )
+{
+    new ActionMap(playerKeyMap)
+    {
+      humanReadableName = "Player";  
+    };
+}
+
+//------------------------------------------------------------------------------
+// Non-remapable binds
+//------------------------------------------------------------------------------
+playerKeyMap.bind(keyboard, "ctrl h", hideHUDs);
+playerKeyMap.bind(keyboard, "alt p", doScreenShotHudless);
+playerKeyMap.bindCmd(keyboard, "escape", "", "Canvas.pushDialog(PauseMenu);");
+
+//------------------------------------------------------------------------------
+// Set up remappable entries
+//------------------------------------------------------------------------------
+addKeyRemap("Fire Weapon", "playerKeyMap", "mouse", "mouseFire", "Fire Weapon");
+addKeyRemap("Zoom", "playerKeyMap", "keyboard", "toggleZoom", "Toggles Zoom Effect");
+
+//------------------------------------------------------------------------------
+// Mouse Trigger
+//------------------------------------------------------------------------------
+//function altTrigger(%val)
+//{
+   //$mvTriggerCount1++;
+//}
+
+playerKeyMap.bind( mouse, button0, mouseFire );
+//playerKeyMap.bind( mouse, button1, altTrigger );
+
+//------------------------------------------------------------------------------
+// Gamepad Trigger
+//------------------------------------------------------------------------------
+playerKeyMap.bind(gamepad, triggerr, gamepadFire);
+playerKeyMap.bind(gamepad, triggerl, gamepadAltTrigger);
+
+//------------------------------------------------------------------------------
+// Zoom and FOV functions
+//------------------------------------------------------------------------------
+
+if($Player::CurrentFOV $= "")
+   $Player::CurrentFOV = $pref::Player::DefaultFOV / 2;
+
+// toggleZoomFOV() works by dividing the CurrentFOV by 2.  Each time that this
+// toggle is hit it simply divides the CurrentFOV by 2 once again.  If the
+// FOV is reduced below a certain threshold then it resets to equal half of the
+// DefaultFOV value.  This gives us 4 zoom levels to cycle through.
+playerKeyMap.bind(keyboard, f, setZoomFOV); // f for field of view
+playerKeyMap.bind(keyboard, z, toggleZoom); // z for zoom
+playerKeyMap.bind( mouse, button1, mouseButtonZoom );
+
+//------------------------------------------------------------------------------
+// Camera & View functions
+//------------------------------------------------------------------------------
+playerKeyMap.bind( keyboard, v, toggleFreeLook ); // v for vanity
+
+playerKeyMap.bind( gamepad, btn_x, toggleFirstPerson );
+
+//------------------------------------------------------------------------------
+// Demo recording functions
+//------------------------------------------------------------------------------
+playerKeyMap.bind( keyboard, F3, startRecordingDemo );
+playerKeyMap.bind( keyboard, F4, stopRecordingDemo );
+
+//------------------------------------------------------------------------------
+// Helper Functions
+//------------------------------------------------------------------------------
+playerKeyMap.bind(keyboard, "F8", dropCameraAtPlayer);
+playerKeyMap.bind(keyboard, "F7", dropPlayerAtCamera);
+
+GlobalActionMap.bind(keyboard, "ctrl F3", doProfile);
+
+//------------------------------------------------------------------------------
+// Misc.
+//------------------------------------------------------------------------------
+GlobalActionMap.bind(keyboard, "tilde", toggleConsole);
+GlobalActionMap.bindCmd(keyboard, "alt k", "cls();","");
+GlobalActionMap.bindCmd(keyboard, "alt enter", "", "Canvas.attemptFullscreenToggle();");
+GlobalActionMap.bindCmd(keyboard, "F1", "", "contextHelp();");
+playerKeyMap.bindCmd(keyboard, "n", "toggleNetGraph();", "");
+
+// ----------------------------------------------------------------------------
+// Useful vehicle stuff
+// ----------------------------------------------------------------------------
+// Bind the keys to the carjack command
+playerKeyMap.bindCmd(keyboard, "ctrl z", "carjack();", "");
+
+// Starting vehicle action map code
+if ( !isObject( flightKeyMap ) )
+{
+    new ActionMap(flightKeyMap)
+    {
+      humanReadableName = "Vehicle";  
+    };
+}
+
+//------------------------------------------------------------------------------
+// Non-remapable binds
+//------------------------------------------------------------------------------
+flightKeyMap.bindCmd(keyboard, "escape", "", "Canvas.pushDialog(PauseMenu);");
+
+//------------------------------------------------------------------------------
+// Set up remappable entries
+//------------------------------------------------------------------------------
+addKeyRemap("Forward", "flightKeyMap", "keyboard", "moveForward", "Forward Movement");
+addKeyRemap("Backward", "flightKeyMap", "keyboard", "movebackward", "Backward Movement");
+addKeyRemap("Fire Weapon", "flightKeyMap", "mouse", "mouseFire", "Fire Weapon");
+addKeyRemap("Alt Fire Weapon", "flightKeyMap", "keyboard", "altFire", "Alt Fire Weapon");
+addKeyRemap("Brakes", "flightKeyMap", "mouse", "brake", "Brakes");
+
+// The key command for flipping the car
+flightKeyMap.bindCmd(keyboard, "ctrl x", "commandToServer(\'flipCar\');", "");
+
+flightKeyMap.bind( keyboard, w, moveforward );
+flightKeyMap.bind( keyboard, s, movebackward );
+flightKeyMap.bind( keyboard, a, moveleft );
+flightKeyMap.bind( keyboard, d, moveright );
+flightKeyMap.bind(keyboard, space, doUpJet);
+flightKeyMap.bind(keyboard, lshift, doJet);
+
+flightKeyMap.bind( mouse, xaxis, yaw );
+flightKeyMap.bind( mouse, yaxis, pitch );
+flightKeyMap.bind( mouse, button0, fVehMouseFire );
+flightKeyMap.bind( mouse, button1, fVehAltFire );
+flightKeyMap.bind( keyboard, v, toggleFreeLook ); // v for vanity
+flightKeyMap.bind( keyboard, tab, toggleFirstPerson );
+flightKeyMap.bindCmd(keyboard, "escape", "", "Canvas.pushDialog(PauseMenu);");
+flightKeyMap.push();
