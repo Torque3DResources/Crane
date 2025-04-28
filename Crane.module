@@ -1,0 +1,16 @@
+<ModuleDefinition
+	ModuleId="Crane"
+	VersionId="1"
+	Description="Implementation of a vehicle example using the Crane model"
+	ScriptFile="Crane"
+	CreateFunction="onCreate"
+	DestroyFunction="onDestroy"
+	Group="Game"
+    Dependencies="UI=1"
+	Priority="1.1">
+	<DeclaredAssets
+        canSave="true"
+        canSaveDynamicFields="true"
+        Extension="asset.taml"
+        Recurse="true" />
+</ModuleDefinition>

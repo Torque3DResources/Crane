@@ -1,0 +1,20 @@
+<MaterialAsset
+    AssetName="Crane_MuzzleFlash_mat"
+    materialDefinitionName="Crane_MuzzleFlash_mat">
+    <Material
+        Name="Crane_MuzzleFlash_mat"
+        mapTo="Crane_MuzzleFlash"
+        translucent="true"
+        translucentBlendOp="AddAlpha"
+        originalAssetName="Crane_MuzzleFlash_mat">
+        <Material.Stages>
+            <Stages_beginarray
+                DiffuseMapAsset="Crane:Crane_MuzzleFlash_D_image"
+                IgnoreLighting="true"
+                Glow="true"
+                AnimFlags="$Sequence"
+                SequenceFramePerSec="16"
+                SequenceSegmentSize="0.25"/>
+        </Material.Stages>
+    </Material>
+</MaterialAsset>

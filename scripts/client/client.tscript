@@ -1,0 +1,16 @@
+function clientCmdtoggleFlightMap(%toggle)
+{
+   if(%toggle)
+   {
+      playerKeyMap.pop();
+	  // clear movement
+	  $mvForwardAction = 0;
+	  $mvBackwardAction = 0;
+      flightKeyMap.push();
+   }
+   else
+   {
+      flightKeyMap.pop();
+      playerKeyMap.push();
+   }
+}

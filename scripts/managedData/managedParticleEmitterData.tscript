@@ -1,0 +1,24 @@
+
+datablock ParticleEmitterData(contrailEm : DefaultEmitter)
+{
+   particles = "contrailPart";
+   ribbonParticles = "1";
+   phiVariance = "0";
+   ejectionPeriodMS = "100";
+   thetaMax = "0";
+   blendStyle = "PREMULTALPHA";
+   ejectionVelocity = "0";
+   ejectionOffset = "0";
+};
+
+datablock ParticleEmitterData(contrailRedEm : DefaultEmitter)
+{
+   particles = "contrailRedPart";
+   ribbonParticles = "1";
+   phiVariance = "0";
+   ejectionPeriodMS = "100";
+   thetaMax = "0";
+   blendStyle = "PREMULTALPHA";
+   ejectionVelocity = "0";
+   ejectionOffset = "0";
+};

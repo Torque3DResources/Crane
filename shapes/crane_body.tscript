@@ -1,0 +1,22 @@
+
+singleton TSShapeConstructor(crane_bodydae)
+{
+   baseShapeAsset = "Crane:crane_body_shape";
+   singleDetailSize = "0";
+   neverImportMat = "DefaultMaterial	ColorEffect*";
+   flipUVCoords = "0";
+   joinIdenticalVerts = "0";
+   reverseWindingOrder = "0";
+   removeRedundantMats = "0";
+   animFPS = "2";
+};
+
+function crane_bodydae::onLoad(%this)
+{
+   %this.addSequence("ambient", "activateBack", "0", "25", "1", "0");
+   %this.setSequenceCyclic("activateBack", "0");
+   %this.addSequence("ambient", "maintainBack", "25", "30", "1", "0");
+   %this.addSequence("ambient", "activateBot", "30", "60", "1", "0");
+   %this.setSequenceCyclic("activateBot", "0");
+   %this.addSequence("ambient", "maintainBot", "55", "60", "1", "0");
+}
