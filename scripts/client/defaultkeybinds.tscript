@@ -33,7 +33,6 @@ if ( !isObject( playerKeyMap ) )
 //------------------------------------------------------------------------------
 playerKeyMap.bind(keyboard, "ctrl h", hideHUDs);
 playerKeyMap.bind(keyboard, "alt p", doScreenShotHudless);
-playerKeyMap.bindCmd(keyboard, "escape", "", "Canvas.pushDialog(PauseMenu);");
 
 //------------------------------------------------------------------------------
 // Set up remappable entries
@@ -121,7 +120,6 @@ if ( !isObject( flightKeyMap ) )
 //------------------------------------------------------------------------------
 // Non-remapable binds
 //------------------------------------------------------------------------------
-flightKeyMap.bindCmd(keyboard, "escape", "", "Canvas.pushDialog(PauseMenu);");
 
 //------------------------------------------------------------------------------
 // Set up remappable entries
@@ -148,5 +146,4 @@ flightKeyMap.bind( mouse, button0, fVehMouseFire );
 flightKeyMap.bind( mouse, button1, fVehAltFire );
 flightKeyMap.bind( keyboard, v, toggleFreeLook ); // v for vanity
 flightKeyMap.bind( keyboard, tab, toggleFirstPerson );
-flightKeyMap.bindCmd(keyboard, "escape", "", "Canvas.pushDialog(PauseMenu);");
 flightKeyMap.push();
