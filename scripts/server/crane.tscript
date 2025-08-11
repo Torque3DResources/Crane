@@ -48,6 +48,7 @@ function Crane::setSpawnObjectTypeComplete(%this, %client)
 function Crane::onPostSpawn(%this, %client)
 {
    commandToClient(%client, 'toggleFlightMap', true);
+   %client.getEventManager().postEvent("postSpawnComplete",%client);
 }
 
 function Crane::setSpawnObjectTypeFailed(%this, %client)

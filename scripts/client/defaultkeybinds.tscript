@@ -113,7 +113,7 @@ if ( !isObject( flightKeyMap ) )
 {
     new ActionMap(flightKeyMap)
     {
-      humanReadableName = "Vehicle";  
+      humanReadableName = "Flying Vehicle";  
     };
 }
 
